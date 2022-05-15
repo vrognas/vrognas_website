@@ -32,7 +32,7 @@ enableEmoji = true
   orgLocal = ""
   description = "Personal website and blog of PhD student Viktor Rognås."
   favicon = "/img/favicon.ico"
-  logo = "/img/blogophonic-mark-dark.png"
+  logo = "/img/home.png"
   mainSections = ["blog"]
   navallcaps = true
   # show/hide social icons in site header & footer
