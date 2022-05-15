@@ -2,19 +2,17 @@
 action_label: Read More &rarr;
 action_link: /about
 action_type: text
-description: Sit down, relax, and get to know Hugo Apéro. Built on top of Blogophonic,
-  we wanted to create a polished Hugo theme with the right features for a true personal
-  website. We set out to create a theme that is a pleasure to learn, and one that
-  helps others get to know you better. It is more than a blog, with flexible custom
-  layouts that help you introduce yourself online.
-image_left: true
+description: "I am an aspiring pharmacometrician and award-winning educator.
+I currently work on my PhD: providing a strategy to a reduce the number of subjects needed to support clinical efficacy of an antibiotic against resistant bacteria.
+My goal is to make pharmacometrics more approachable and understandable"
+image_left: false
 images:
 - img/revoir.jpg
 show_action_link: true
 show_social_links: true
-subtitle: A Hugo theme you'll want to hang out with
+subtitle: PhD student in pharmaceutical science at Uppsala University, Sweden
 text_align_left: false
-title: Hugo Apéro
+title: Viktor Rognås
 type: home
 ---
 
