@@ -1,4 +1,4 @@
-baseURL = "https://vrognas.netlify.app"
+baseURL = "https://vrognas.com"
 theme = "hugo-apero"
 languageCode = "en"
 title = "Viktor Rognås, PhD student"
