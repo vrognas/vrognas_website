@@ -1,7 +1,7 @@
 baseURL = "https://vrognas.com"
 theme = "hugo-apero"
 languageCode = "en"
-title = "Viktor Rognås, PhD student"
+title = "Viktor Rognås"
 author = "Viktor Rognås"
 copyright = "" # set to override the auto generated copyright using org info and now year
 googleAnalytics = ""
@@ -33,7 +33,7 @@ enableEmoji = true
   description = "Personal website and blog of PhD student Viktor Rognås."
   favicon = "/img/favicon.ico"
   logo = "/img/home.png"
-  mainSections = ["blog"]
+  mainSections = [""]
   navallcaps = true
   # show/hide social icons in site header & footer
   # configure social icons and links below in [[params.social]]
@@ -94,10 +94,6 @@ enableEmoji = true
       icon_pack = "fab"
       url       = "https://github.com/vrognas"
   [[params.social]]
-      icon      = "orcid" # icon name without the 'fa-'
-      icon_pack = "ai"
-      url       = "http://orcid.org/0000-0002-7837-2467"
-  [[params.social]]
       icon      = "linkedin-in" # icon name without the 'fa-'
       icon_pack = "fab"
       url       = "https://www.linkedin.com/in/vrgonas/"
@@ -105,6 +101,10 @@ enableEmoji = true
       icon      = "google-scholar" # icon name without the 'fa-'
       icon_pack = "ai"
       url       = "https://scholar.google.com/citations?user=RBJi1XQAAAAJ"
+  [[params.social]]
+      icon      = "orcid" # icon name without the 'fa-'
+      icon_pack = "ai"
+      url       = "http://orcid.org/0000-0002-7837-2467"
 
 [taxonomies]
   category = "categories"
@@ -150,11 +150,11 @@ enableEmoji = true
     title = "RSS"
     url = "/blog/index.xml"
     weight = 3
-  [[menu.footer]]
-    name = "Contributors"
-    title = "Contributors"
-    url = "/contributors/"
-    weight = 4
+#  [[menu.footer]]
+#    name = "Contributors"
+#    title = "Contributors"
+#    url = "/contributors/"
+#    weight = 4
 
 # see https://gohugo.io/about/hugo-and-gdpr/
 [privacy]
