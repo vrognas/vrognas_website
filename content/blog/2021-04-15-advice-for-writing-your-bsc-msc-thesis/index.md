@@ -1,7 +1,7 @@
 ---
 title: "Advice for writing your BSc/MSc thesis"
 subtitle: ""
-date: 2021-04-15
+date: "2021-04-15"
 author: "Viktor Rognås"
 draft: false
 # layout options: single, single-sidebar
