@@ -1,4 +1,4 @@
-baseURL = "https://vrognas.com"
+baseURL = "https://www.vrognas.com"
 theme = "hugo-apero"
 languageCode = "en"
 title = "Viktor Rognås"
@@ -30,10 +30,10 @@ enableEmoji = true
 [params]
   orgName = "Viktor Rognås"
   orgLocal = ""
-  description = "Personal website and blog of PhD student Viktor Rognås."
+  description = "Personal website and blog."
   favicon = "/img/favicon.ico"
   logo = "/img/home.png"
-  mainSections = [""]
+  mainSections = ["blog"]
   navallcaps = true
   # show/hide social icons in site header & footer
   # configure social icons and links below in [[params.social]]

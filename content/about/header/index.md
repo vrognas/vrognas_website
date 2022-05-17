@@ -6,8 +6,6 @@ headline: |
   Hi! Nice to meet you.
 ---
 
-A personal blog by [Viktor Rognås](https://katalog.uu.se/profile/?id=N17-1381).
-
 Here’s where I link to my other social media accounts — I also write occasional blog posts. Feel free to look around; I hope you will find something useful!
 
 I am interested in data science and leadership, and currently working on my PhD in [Pharmacometrics at Uppsala University](https://farmaci.uu.se/research/pharmacometrics/).
