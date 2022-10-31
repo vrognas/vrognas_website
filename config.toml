@@ -96,7 +96,7 @@ enableEmoji = true
   [[params.social]]
       icon      = "linkedin-in" # icon name without the 'fa-'
       icon_pack = "fab"
-      url       = "https://www.linkedin.com/in/vrgonas/"
+      url       = "https://www.linkedin.com/in/vrognas/"
   [[params.social]]
       icon      = "google-scholar" # icon name without the 'fa-'
       icon_pack = "ai"
