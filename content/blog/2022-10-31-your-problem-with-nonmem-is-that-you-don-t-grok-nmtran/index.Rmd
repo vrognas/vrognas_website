@@ -1,0 +1,328 @@
+---
+title: Your problem with NONMEM is that you don’t grok NM-TRAN
+author: Viktor Rognås
+date: '2022-10-31'
+slug: []
+categories:
+  - Pharmacometrics
+tags:
+  - NONMEM
+---
+
+When you first sit down with NONMEM^[NONlinear Mixed Effects Modeling], it can appear considerably arcane.
+The "Zen" of NONMEM is that you're speaking a language called NM-TRAN^[NONMEM translator]; and you need to grok^[To grok something is "to understand intuitively or by empathy, to establish rapport with" and "to empathize or communicate sympathetically (with); also, to experience enjoyment".] NM-TRAN.
+
+When you are writing a "model" in NONMEM, you are writing it in the language of NM-TRAN.
+The document you are writing in is a text file called a *control stream*, *control file*, or *model file*; it tells NONMEM what to do.
+By convention this text file has the file extension `.mod` or `.ctl`.
+The NM-TRAN document is built up from different "chapters" that all start with the `$` sign (eg `$ESTIMATION`), these "chapters" are called *control records* (see all control record listed below!).
+
+Within some control records^[`$PRED`, `$PK`, `$ERROR`, `$DES`, `$AES`, `$AESINITIAL`, `$TOL`, `$MIX`, and `$INFN`] you can write so called *abbreviated code*.
+Within these control records, you can either assign a value to a variable (`variable = value`), or use `IF`, `THEN`, `ELSE`, `ELSEIF`, `ENDIF`, `DO WHILE`, `ENDDO`, `CALL`, `WRITE`, `PRINT`, `RETURN`, `OPEN`, `CLOSE`, `REWIND`.
+
+There are a couple ways to write a model in NM-TRAN.
+One option is to use templates of common models, from the built-in NONMEM library called PREDPP (speficied in the `$SUBROUTINES` control record using different `ADVAN`s).
+Although, the templates are not needed since it is possible to write the model "from scratch".  
+Writing a model from scratch can be done in two ways:
+
+* Using `$DES` ("Differential Equation System")
+  * Generally when you are using compartments
+  * Differential equations
+  * "Numerical" solution
+* Using `$PRED` ("PREDiction")
+  * Generally when you are *not* using compartments (eg for some categorical data models)
+  * Algebraic equations
+  * "Closed form" or "analytical" solution
+
+Some models can be written using both of these approaches with identical results.
+
+A model normally contain the following control records, in the following order:
+
+`$PROBLEM`  
+`$INPUT`  
+`$DATA`  
+
+then, either
+
+`$PRED`  
+
+or  
+
+`$SUBROUTINE`  
+`$MODEL`  
+`$PK`  
+`$DES`  
+`$ERROR` (the name is totally misleading. Rather think of it as `$RESULT`)  
+
+then,
+
+`$THETA`  
+`$OMEGA`  
+`$SIGMA`  
+`$ESTIMATION`  
+`$COVARIANCE`  
+`$TABLE`
+
+As can be seen in the `$PRED` example below, 
+the `$PK`/`$DES`/`$ERROR` records are all replaced by `$PRED`.
+
+A very simple example of a `$DES` control stream:
+
+```
+$PROB One Compartment Bolus, Volume and Clearance
+$DATA data.csv
+$INPUT
+  ID
+  conc = DV
+  DOSE
+$SUBROUTINE ADVAN13 TOL=9
+$MODEL COMP(CENTRAL,DEFDOSE)
+$PK
+  V  = THETA(1) * EXP(ETA(1)) ; volume
+  CL = THETA(2) * EXP(ETA(2)) ; clearance
+  K  = CL / V
+$DES
+  DADT(1) = -A(1) * K
+$ERROR
+  Y = A(1) / V * (1 + EPS(1))
+$THETA
+  70
+  6
+$OMEGA
+  0.9
+  0.9
+$SIGMA
+  0.1
+$ESTIMATION SIGDIG=3 MAXEVALS=99999 PRINT=1
+$TABLE ID
+```
+A very simple example of a `$PRED` control stream:
+
+```
+$PROB One Compartment Bolus, Volume and Clearance
+$DATA data.csv
+$INPUT
+  ID
+  conc = DV
+  DOSE
+$PRED
+  V  = THETA(1) * EXP(ETA(1)) ; volume
+  CL = THETA(2) * EXP(ETA(2)) ; clearance
+  C  = 1 / V ; Coefficient, calculated from the volume term
+  L  = CL / V
+  Y  = DOSE * C * EXP(-L * TIME) * (1 + EPS(1))
+$THETA
+  70
+  6
+$OMEGA
+  0.9
+  0.9
+$SIGMA
+  0.1
+$ESTIMATION SIGDIG=3 MAXEVALS=99999 PRINT=1
+$TABLE ID
+```
+
+
+## Alphabetic list of Control Records
+
+`$ABBREVIATED`  
+Provides instructions about abbreviated code  
+
+`$AES`  
+Marks the beginning of abbreviated code for the AES routine  
+
+`$AESINITIAL`  
+Marks the beginning of abbreviated code for the AES routine  
+
+`$ANNEAL`  
+Sets starting diagonal Omega values to facilitate EM search methods  
+
+`$BIND`  
+Define data values used by `$PK`, `$DES`, and `$AES`  
+
+`$CHAIN`  
+Supplies initial estimates for an entire problem  
+
+`$CONTR`  
+Defines values for certain user-supplied routines  
+
+`$COVARIANCE`, `$COVR`  
+Instructions for NONMEM Covariance Step  
+
+`$DATA`  
+Describes the NM-TRAN data set  
+
+`$DEFAULT`  
+Specifies certain defaults for NONMEM  
+
+`$DES`  
+Marks the beginning of abbreviated code for the DES routine  
+
+`$DESIGN`  
+Instructions for Clinical Trial Design Evaluation and Optimization  
+
+`$ERROR`  
+Marks the beginning of abbreviated code for the ERROR routine  
+
+`$ESTIMATION`, `$ESTM`  
+Instructions for the NONMEM Estimation Step  
+
+`$ETAS`, `$PHIS`  
+Specifies Initial Values for Etas or Phis  
+
+`$FORMAT`  
+Specifies significant digits for the NONMEM report file  
+
+`$INDEX`, `$INDXS`  
+Defines values for the PRED/PREDPP INDXS array  
+
+`$INFN`  
+Marks the beginning of abbreviated code for the INFN routine  
+
+`$INPUT`  
+Defines the data item types in the data set  
+
+`$LEVEL`  
+Specifies Nested Random Levels Above Subject ID  
+
+`$MIX`  
+Marks the beginning of abbreviated code for the MIX routine  
+
+`$MODEL`  
+Specifies the MODEL subroutine of PREDPP  
+
+`$MSFI`  
+Gives the name of an input Model Specification File  
+
+`$NONPARAMETRIC`  
+Instructions for the NONMEM Nonparametric Step  
+
+`$OLKJDF`  
+Specifies LKJ decorrelation degrees of freedom for each OMEGA block  
+
+`$OMEGA`  
+Supplies initial estimates for the NONMEM OMEGA Matrix  
+
+`$OMEGAP`, `$OMEGAPD` 
+Gives prior information for omegas  
+
+`$OMIT`  
+Defines data item types to be excluded from template matching when raw data averages are computed  
+
+`$OVARF`  
+Specifies the weighting to the standard deviations of OMEGA  
+
+`$PK`  
+Marks the beginning of abbreviated code for the PK Routine  
+
+`$PRED`  
+Marks the beginning of abbreviated code for the PRED routine  
+
+`$PRIOR`  
+Provides instructions for the PRIOR subroutine  
+
+`$PROBLEM`  
+Identifies the start of a NONMEM Problem Specification  
+
+`$RCOV`, `$RCOVI`  
+Inputting Variance-Covariance information from another problem  
+
+`$SCATTERPLOT`  
+Requests that NONMEM generate one or more scatterplots  
+
+`$SIGMA`  
+Supplies initial estimates for the NONMEM SIGMA Matrix  
+
+`$SIGMAP`, `$SIGMAPD`  
+Gives prior information for sigmas  
+
+`$SIMULATION`  
+Instructions for the NONMEM Simulation Step  
+
+`$SIZES`  
+Array sizes for NONMEM and PREDPP  
+
+`$SLKJDF`  
+Specifies LKJ decorrelation degrees of freedom for each SIGMA block  
+
+`$SUBROUTINES`  
+Lists certain subroutine choices for the NONMEM Executable  
+
+`$SUPER`  
+Identifies the start of a NONMEM Superproblem  
+
+`$SVARF`  
+Specifies the weighting to the standard deviations of SIGMA  
+
+`$TABLE`  
+Requests that NONMEM generate a table  
+
+`$THETA`  
+Gives initial estimates and bounds for thetas  
+
+`$THETAI`  
+Gives Instructions for Transforming Initial Thetas  
+
+`$THETAP`, `$THETAPV`  
+Gives prior information for thetas  
+
+`$THETAR`  
+Gives Instructions for Transforming Final Thetas  
+
+`$TOL`  
+Marks the beginning of abbreviated code for the TOL routine  
+
+`$TTDF`  
+Specifies t-distribution degrees of freedom for theta  
+
+`$WARNINGS`  
+Control Display of NM-TRAN Warning, Data Warning and Data Error messages  
+
+
+## Possible NM-TRAN control records with PRED
+
+`$PROBLEM`  
+`$INPUT`  
+`$INDEX`  
+`$CONTR`  
+`$DATA`  
+`$SUBROUTINES`  
+`$ABBREVIATED`  
+`$PRED`*  
+`$THETA`  
+`$OMEGA`  
+`$SIGMA`  
+`$MFSI`  
+`$SIMULATION`  
+`$ESTIMATION`  
+`$COVARIANCE`  
+`$TABLE`  
+`$SCATTERPLOT`
+
+## Possible NM-TRAN control records with PPRED
+
+`$PROBLEM`  
+`$INPUT`  
+`$BIND`*  
+`$INDEX`  
+`$CONTR`  
+`$DATA`  
+`$SUBROUTINES`  
+`$MODEL`*  
+`$ABBREVIATED`  
+`$PK`*  
+`$ERROR`*  
+`$DES`*  
+`$AESINITIAL`*  
+`$AES`*  
+`$TOL`*  
+`$THETA`  
+`$OMEGA`  
+`$SIGMA`  
+`$MFSI`  
+`$SIMULATION`  
+`$ESTIMATION`  
+`$COVARIANCE`  
+`$TABLE`  
+`$SCATTERPLOT`
