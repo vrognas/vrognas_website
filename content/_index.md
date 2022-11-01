@@ -1,9 +1,9 @@
 ---
 title: "Viktor Rognås 🌱"
-subtitle: "PhD student in pharmaceutical science @ Uppsala University"
-description: "I am an aspiring pharmacometrician and award-winning educator.
-I'm currently working on my PhD: providing a strategy to a reduce the number of subjects needed to support clinical efficacy of an antibiotic against resistant bacteria.
-My goal is to make pharmacometrics more approachable and understandable"
+subtitle: "PhD student in pharmacometrics @ Uppsala University"
+description: "I am an aspiring scientist and educator.
+I'm currently working on my PhD project: providing a strategy to a reduce the number of subjects needed to support clinical efficacy of an antibiotic against resistant bacteria.
+My goal with this blog is to document my life journey in general, and my PhD journey in particular."
 image_left: false
 text_align_left: true
 images:
