@@ -7,7 +7,7 @@ My goal with this blog is to document my life journey in general, and my PhD jou
 image_left: false
 text_align_left: true
 images:
-- img/cv2_round.png
+- img/viktor_smile_noteeth_remastered_round.png
 show_social_links: true
 show_action_link: true
 action_label: About me &rarr;
